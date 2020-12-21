@@ -49,6 +49,12 @@ public class TsDepEntity extends com.zz.bms.core.db.entity.BaseBusinessExEntity<
 	private String  pid ;
 
 
+    @EntityAttrFkAnnotation(group = "organId",  groupName = "上级部门" ,   dbColumnName = "organ_id" , dbColumnType = "CHAR" , dbColumnLength = 32   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsOrganBO.class)
+    @EntityAttrDBAnnotation(attrName="机构" ,attrColumn="pid"  , type = "CHAR"      ,  attrLength = 32 , notNull = false )
+    @EntityAttrPageAnnotation(title = "机构",sort = 500  , pageElement = "text"            , maxLength = 32        ,required=false )
+	private String  organId ;
+
+
 
     @EntityAttrDictAnnotation(group = "depStatus", groupName = "状态" ,  dbColumnName = "dict_val" , dbColumnLength = 2 , isValueField = true , dictType = "dep_status")
     @EntityAttrDBAnnotation(attrName="状态" ,attrColumn="dep_status"  , type = "CHAR"      ,  attrLength = 1 , notNull = true )
@@ -140,6 +146,13 @@ public class TsDepEntity extends com.zz.bms.core.db.entity.BaseBusinessExEntity<
     	return this.remark;
     }
 
+	@Override
+	public String getOrganId() {
+		return organId;
+	}
 
-	
+	@Override
+	public void setOrganId(String organId) {
+		this.organId = organId;
+	}
 }

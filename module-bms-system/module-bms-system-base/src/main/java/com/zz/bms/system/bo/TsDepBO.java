@@ -40,6 +40,11 @@ public class TsDepBO extends TsDepEntity implements Serializable , IBoEntity {
     @EntityAttrPageAnnotation(title = "上级部门",sort = 501                      ,required=false )
     private String pname ;
 
+    @TableField(exist = false)
+    @EntityAttrFkAnnotation(group = "organId",  groupName = "机构" ,   dbColumnName = "dep_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsOrganBO.class)
+    @EntityAttrExcelAnnotation(excelProcess= "3")
+    @EntityAttrPageAnnotation(title = "机构",sort = 501                      ,required=false )
+    private String organName ;
 
 
     @TableField(exist = false)
@@ -95,8 +100,13 @@ public class TsDepBO extends TsDepEntity implements Serializable , IBoEntity {
         return tree;
     }
 
+    public String getOrganName() {
+        return organName;
+    }
 
-
+    public void setOrganName(String organName) {
+        this.organName = organName;
+    }
 
     public boolean isTable() {
 

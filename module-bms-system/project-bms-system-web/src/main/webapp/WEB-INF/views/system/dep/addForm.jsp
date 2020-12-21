@@ -22,6 +22,29 @@
 
                         <tbody>
                         <tr>
+                            <th>所属机构<font color="red">*</font></th>
+                            <td colspan="3">
+                                <c:if test="${ fn:indexOf(allQueryString,'&organId=')>=0 }">
+                                    <input type="text" class="form-control input-sm" name="organName" id="organName" value="${ m.organName }" readonly>
+                                </c:if>
+                                <c:if test="${ fn:indexOf(allQueryString,'&organId=')<0 }">
+                                    <div class="input-group">
+                                        <input type="text"  id="organName" name="organName" value="${m.pname}" class="form-control input-sm  organName "
+                                               placeholder="请选择上级部门" readonly="readonly" >
+                                        <input type="hidden" id="organId" name="organId" value="${m.organId}">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary btn-sm organName">
+                                                <i class="fa fa-search-plus"></i>
+                                            </button>
+                                            <button type="button" id="clearOrganId" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </td>
+                        </tr>
+                        <tr>
                             <th>部门编号<font color="red">*</font></th>
                             <td><input type="text" class="form-control input-sm required"  placeholder="请输入部门编号" autocomplete="off"
                                        value="${m.depCode}" id="depCode" name="depCode" minlength="2" maxlength='20'/></td>
@@ -129,6 +152,7 @@
 
 <script src="${staticUrl}/statics2/business-js/system/dep/search.js"></script>
 <script src="${staticUrl}/statics2/business-js/system/user/search.js"></script>
+<script src="${ staticUrl }/statics2/business-js/system/organ/search.js"></script>
 
 
 <script language="JavaScript">

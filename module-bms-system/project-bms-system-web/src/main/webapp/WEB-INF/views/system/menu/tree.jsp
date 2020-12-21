@@ -13,7 +13,57 @@
 
         </form>
 
+        <div class="btn-bar" style="margin-left: -10px;">
 
+
+
+            <shiro:hasPermission name="system.menu:add">
+                <button type="button" class="btn btn-primary btn-sm" onclick="toAdd()">
+                    <i class="fa fa-plus"></i>
+                    <span>新增 </span>
+                </button>
+            </shiro:hasPermission>
+
+
+            <shiro:hasPermission name="system.menu:delete">
+                <button type="button" class="btn btn-primary btn-sm" onclick="doDelete()">
+                    <i class="fa fa-trash"></i>
+                    <span>删除 </span>
+                </button>
+            </shiro:hasPermission>
+
+
+            <shiro:hasPermission name="system.menu:exportExcel">
+                <div class="btn-group">
+                    <button type="button" id="exportExcel" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-download"></i>
+                        导出 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a href="${ ctx }/${ currParentUrl }/csv/export" class="export" >
+                                <i class="fa fa-download"></i>导出CSV
+                            </a>
+                        </li>
+                        <li>
+                            <a href="${ ctx }/${ currParentUrl }/hssf/export" class="export" >
+                                <i class="fa fa-download"></i>导出Excel2003
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${ ctx }/${ currParentUrl }/sxssf/export" class="export" >
+                                <i class="fa fa-download"></i>导出Excel2007
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </shiro:hasPermission>
+
+
+
+        </div>
 
 
 
