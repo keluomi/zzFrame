@@ -236,7 +236,10 @@ public abstract class BaseCURDController<
             }
 
 
-            page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
+            if (isQueryDB()){
+
+                page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
+            }
 
             processResult(page.getRecords());
 
