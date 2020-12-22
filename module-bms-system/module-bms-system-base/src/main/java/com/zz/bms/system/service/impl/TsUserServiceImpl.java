@@ -7,8 +7,10 @@ import com.zz.bms.core.exceptions.BizException;
 import com.zz.bms.enums.EnumDictType;
 import com.zz.bms.system.bo.TsDepBO;
 import com.zz.bms.system.bo.TsDictBO;
+import com.zz.bms.system.bo.TsOrganBO;
 import com.zz.bms.system.bo.TsUserBO;
 import com.zz.bms.system.dao.TsDepDAO;
+import com.zz.bms.system.dao.TsOrganDAO;
 import com.zz.bms.system.dao.TsUserDAO;
 import com.zz.bms.system.service.TsDictService;
 import com.zz.bms.system.service.TsUserService;
@@ -39,6 +41,8 @@ public class TsUserServiceImpl extends SystemBaseServiceImpl<TsUserBO,String> im
 	private TsDepDAO tsDepDAO;
 
 
+	@Autowired
+	private TsOrganDAO tsOrganDAO;
 	@Autowired
 	private TsUserDAO tsUserDAO ;
 
@@ -78,6 +82,14 @@ public class TsUserServiceImpl extends SystemBaseServiceImpl<TsUserBO,String> im
 
 		}
 
+
+
+		if(StringUtils.isNotEmpty( tsUserBO.getOrganId())){
+			TsOrganBO temp = tsOrganDAO.selectById(tsUserBO.getOrganId());
+			if(temp != null){
+				tsUserBO.setOrganName(temp.getOrganName());
+			}
+		}
 		if(StringUtils.isNotEmpty( tsUserBO.getDepId())){
 			TsDepBO temp = tsDepDAO.selectById( tsUserBO.getDepId() );
 			if(temp != null){

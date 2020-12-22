@@ -33,18 +33,23 @@
                             <td class="fd_loginName">${m.loginName}</td>
                         </tr>
                         <tr>
-                            <th>直属领导</th>
-                            <td class="fd_leadUserName">${m.leadUserName}</td>
+                            <th>所属机构</th>
+                            <td class="fd_organName">${m.organName}</td>
                             <th>所在部门</th>
                             <td class="fd_depName">${m.depName}</td>
                         </tr>
-
                         <tr>
+                            <th>直属领导</th>
+                            <td class="fd_leadUserName">${m.leadUserName}</td>
                             <th>手机号</th>
                             <td class="fd_phone">${m.phone}</td>
 
+                        </tr>
+
+                        <tr>
+
                             <th>邮箱</th>
-                            <td class="fd_email">${m.email}</td>
+                            <td class="fd_email" colspan="3">${m.email}</td>
                         </tr>
                         <tr>
                             <th >备注</th>
@@ -85,7 +90,50 @@
                                        autocomplete="off" equalto="#loginPassword" data-msg-equalto="您2次输入的新密码不一致！" minlength="6" maxlength='10'/></td>
                         </tr>
                         </c:if>
-
+                        <tr>
+                            <th>所属机构<font color="red">*</font></th>
+                            <td>
+                                <c:if test="${ fn:indexOf(allQueryString,'&organId=')>=0 }">
+                                    <input type="text" class="form-control input-sm" name="organName" id="organName" value="${ m.organName }" readonly>
+                                </c:if>
+                                <c:if test="${ fn:indexOf(allQueryString,'&organId=')<0 }">
+                                    <div class="input-group">
+                                        <input type="text"  id="organName" name="organName" value="${m.organName}" class="form-control input-sm  organName "
+                                               placeholder="请选择上级部门" readonly="readonly" >
+                                        <input type="hidden" id="organId" name="organId" value="${m.organId}">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary btn-sm organName">
+                                                <i class="fa fa-search-plus"></i>
+                                            </button>
+                                            <button type="button" id="clearOrganId" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </td>
+                            <th>所在部门</th>
+                            <td>
+                                <c:if test="${ fn:indexOf(allQueryString,'&depId=')>=0 }">
+                                    <input type="text"  id="depName" name="depName" value="${m.depId}" class="form-control input-sm" readonly="readonly" >
+                                </c:if>
+                                <c:if test="${ fn:indexOf(allQueryString,'&depId=')<0 }">
+                                    <div class="input-group">
+                                        <input type="text"  id="depName" name="depName" value="${m.depName}" class="form-control input-sm  depName "
+                                               placeholder="请选择所在部门" readonly="readonly" >
+                                        <input type="hidden" id="depId" name="depId" value="${m.depId}">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary btn-sm depName">
+                                                <i class="fa fa-search-plus"></i>
+                                            </button>
+                                            <button type="button" id="clearDepId" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </td>
+                        </tr>
                         <tr>
                             <th>直属领导</th>
                             <td>
@@ -108,36 +156,16 @@
                                 </div>
                                 </c:if>
                             </td>
-                            <th>所在部门</th>
-                            <td>
-                                <c:if test="${ fn:indexOf(allQueryString,'&depId=')>=0 }">
-                                    <input type="text"  id="depName" name="depName" value="${m.depId}" class="form-control input-sm" readonly="readonly" >
-                                </c:if>
-                                <c:if test="${ fn:indexOf(allQueryString,'&depId=')<0 }">
-                                <div class="input-group">
-                                    <input type="text"  id="depName" name="depName" value="${m.depName}" class="form-control input-sm  depName "
-                                           placeholder="请选择所在部门" readonly="readonly" >
-                                    <input type="hidden" id="depId" name="depId" value="${m.depId}">
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-primary btn-sm depName">
-                                            <i class="fa fa-search-plus"></i>
-                                        </button>
-                                        <button type="button" id="clearDepId" class="btn btn-primary btn-sm">
-                                            <i class="fa fa-close"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                </c:if>
-                            </td>
-                        </tr>
-
-                        <tr>
                             <th>手机号<font color="red">*</font></th>
                             <td><input type="text" class="form-control input-sm required"  placeholder="请输入手机号"
                                        value="${m.phone}" id="phone" name="phone" minlength="11" maxlength='11'/></td>
 
+                        </tr>
+
+                        <tr>
+
                             <th>邮箱<font color="red">*</font></th>
-                            <td><input type="email" class="form-control input-sm required"  placeholder="请输入邮箱"
+                            <td colspan="3"><input type="email" class="form-control input-sm required"  placeholder="请输入邮箱"
                                        value="${m.email}"  id="email" name="email" minlength="4" maxlength='50'/></td>
                         </tr>
 
@@ -213,6 +241,7 @@
 <script src="${staticUrl}/statics2/business-js/system/dep/search.js"></script>
 <script src="${staticUrl}/statics2/business-js/system/user/search.js"></script>
 <script src="${staticUrl}/statics2/js/project/form.js"></script>
+<script src="${ staticUrl }/statics2/business-js/system/organ/search.js"></script>
 
 
 <script src="${staticUrl}/statics2/js/project/common-upload.js"></script>
@@ -244,7 +273,14 @@
             clearId: "clearLeadUserId"
         });
 
-
+        //选择机构
+        $(".organName").OpenSystemOrganSelectWin({
+            title: "上级机构",
+            selectType: "t1",
+            callId: "organId",
+            callName: "organName",
+            clearId: "clearOrganId"
+        });
     });
 
 

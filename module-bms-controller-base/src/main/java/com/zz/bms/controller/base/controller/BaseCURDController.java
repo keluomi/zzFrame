@@ -128,7 +128,10 @@ public abstract class BaseCURDController<
             Wrapper wrapper = buildQueryWrapper(query, m);
 
 
-            page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
+            if (isQueryDB()){
+
+                page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
+            }
 
             processResult(page.getRecords());
 

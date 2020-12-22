@@ -125,10 +125,11 @@
             <th field="ck" checkbox="true"></th>
             <th field='userName' align="left" width="2" sortable='false' formatter='titleAllFmt'>用户名称</th>
             <th field='loginName' align="left" width="2" sortable='false' >用户登录名</th>
-            <th field='userStatusName' align="left" width="1" sortable='false'>状态</th>
             <th field='phone' align="left" width="2" sortable='false'>手机</th>
             <th field='email' align="left" width="2" sortable='false'>邮箱</th>
+            <th field='organName' align="left" width="2" sortable='false'>机构</th>
             <th field='depName' align="left" width="2" sortable='false'>部门</th>
+            <th field='userStatusName' align="left" width="1" sortable='false'>状态</th>
             <th field='makes' align="center" formatter='makesFmt'>操作</th>
 
 

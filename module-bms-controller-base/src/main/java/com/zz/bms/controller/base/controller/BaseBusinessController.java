@@ -345,6 +345,14 @@ public abstract class BaseBusinessController<
 
     }
 
+
+    /**
+     * 是否查询DB，默认是，如果在不满足某些条件的情况下，不允许查询数据，则重载返回false即可
+     * @return
+     */
+    protected boolean isQueryDB(){
+        return true;
+    }
     /**
      * 保存或修改之前， 处理BO中属性的值
      * 如反填 状态名称的值

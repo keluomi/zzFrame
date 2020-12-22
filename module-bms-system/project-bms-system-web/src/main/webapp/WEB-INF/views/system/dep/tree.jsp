@@ -86,6 +86,7 @@
 
             <th data-options="field:'depName'" width="220" align="left" formatter='titleFmt'>部门名称</th>
             <th data-options="field:'depCode'" width="100" >部门编号</th>
+            <th data-options="field:'organName'" width="100" >所属机构</th>
             <th data-options="field:'leadUserName'" width="100" >部门负责人</th>
             <th data-options="field:'depStatusName'" width="100" >状态</th>
 

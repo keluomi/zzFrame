@@ -24,16 +24,17 @@
                         <tbody>
                         <tr>
 
-                        <tr>
-                            <th>所属机构</th>
-                            <td class="fd_organName">
-                                ${m.fd_organName}
-                            </td>
-                        </tr>
+
                             <th>部门编号</th>
                             <td class="fd_depCode">${m.depCode}</td>
                             <th>部门名称</th>
                             <td class="fd_depName">${m.depName}</td>
+                        </tr>
+                        <tr>
+                            <th>所属机构</th>
+                            <td class="fd_organName" colspan="3">
+                                ${m.organName}
+                            </td>
                         </tr>
                         <tr>
                             <th>部门负责人</th>
@@ -63,6 +64,16 @@
                         </colgroup>
 
                         <tbody>
+
+                        <tr>
+                            <th>部门编号<font color="red">*</font></th>
+                            <td><input type="text" class="form-control input-sm required"  placeholder="请输入部门编号" autocomplete="off"
+                                       value="${m.depCode}" id="depCode" name="depCode" minlength="2" maxlength='20'/></td>
+
+                            <th>部门名称<font color="red">*</font></th>
+                            <td><input type="text" class="form-control input-sm required"  placeholder="请输入部门名称"  autocomplete="off"
+                                       value="${m.depName}" id="depName" name="depName" minlength="1" maxlength='50'/></td>
+                        </tr>
                         <tr>
                             <th>所属机构<font color="red">*</font></th>
                             <td colspan="3">
@@ -71,7 +82,7 @@
                                 </c:if>
                                 <c:if test="${ fn:indexOf(allQueryString,'&organId=')<0 }">
                                     <div class="input-group">
-                                        <input type="text"  id="organName" name="organName" value="${m.pname}" class="form-control input-sm  organName "
+                                        <input type="text"  id="organName" name="organName" value="${m.organName}" class="form-control input-sm  organName "
                                                placeholder="请选择上级部门" readonly="readonly" >
                                         <input type="hidden" id="organId" name="organId" value="${m.organId}">
                                         <div class="input-group-btn">
@@ -86,16 +97,6 @@
                                 </c:if>
                             </td>
                         </tr>
-                        <tr>
-                            <th>部门编号<font color="red">*</font></th>
-                            <td><input type="text" class="form-control input-sm required"  placeholder="请输入部门编号" autocomplete="off"
-                                       value="${m.depCode}" id="depCode" name="depCode" minlength="2" maxlength='20'/></td>
-
-                            <th>部门名称<font color="red">*</font></th>
-                            <td><input type="text" class="form-control input-sm required"  placeholder="请输入部门名称"  autocomplete="off"
-                                       value="${m.depName}" id="depName" name="depName" minlength="1" maxlength='50'/></td>
-                        </tr>
-
                         <tr>
                             <th>部门负责人</th>
                             <td>
@@ -227,7 +228,14 @@
             clearId: "clearLeadUserId"
         });
 
-
+        //选择机构
+        $(".organName").OpenSystemOrganSelectWin({
+            title: "上级机构",
+            selectType: "t1",
+            callId: "organId",
+            callName: "organName",
+            clearId: "clearOrganId"
+        });
     });
 
 

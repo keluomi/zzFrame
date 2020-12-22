@@ -20,6 +20,7 @@ function openSystemDepWin(config, callBack)
 
                 tableTemple += '			<th field="depName" align="left"  >部门名称</th>' ;
                 tableTemple += '			<th field="depCode" align="left"  >部门代码</th>' ;
+                tableTemple += '			<th field="organName" align="left" >所属机构</th>' ;
                 tableTemple += '			<th field="depAddr" align="left"  >部门地址</th>' ;
 
 

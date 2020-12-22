@@ -7,18 +7,19 @@ import com.zz.bms.core.exceptions.BizException;
 import com.zz.bms.enums.EnumDictType;
 import com.zz.bms.system.bo.TsDepBO;
 import com.zz.bms.system.bo.TsDictBO;
+import com.zz.bms.system.bo.TsOrganBO;
 import com.zz.bms.system.bo.TsUserBO;
 import com.zz.bms.system.dao.TsDepDAO;
+import com.zz.bms.system.dao.TsOrganDAO;
 import com.zz.bms.system.dao.TsUserDAO;
 import com.zz.bms.system.service.TsDepService;
 import com.zz.bms.system.service.TsDictService;
+import com.zz.bms.system.service.TsOrganService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 部门 ServiceImpl
@@ -41,6 +42,10 @@ public class TsDepServiceImpl extends SystemBaseServiceImpl<TsDepBO,String> impl
 
 	@Autowired
 	private TsDepDAO tsDepDAO ;
+
+
+	@Autowired
+	private TsOrganDAO tsOrganDAO;
 
 
 
@@ -68,6 +73,13 @@ public class TsDepServiceImpl extends SystemBaseServiceImpl<TsDepBO,String> impl
 				tsDepBO.setLeadUserName(temp.getUserName());
 			}
 		}
+
+		if (StringUtils.isNotEmpty(tsDepBO.getOrganId())){
+			TsOrganBO tsOrgan = tsOrganDAO.selectById(tsDepBO.getOrganId());
+			if (tsOrgan != null){
+				tsDepBO.setOrganName(tsOrgan.getOrganName());
+			}
+		}
 		try {
 			if(StringUtils.isEmpty(tsDepBO.getDepStatusName()) && StringUtils.isNotEmpty(tsDepBO.getDepStatus()) ) {
 				String dictName = tsDictService.getDictName(tsDepBO.getDepStatus(),EnumDictType.DEP_STATUS.getVal());
@@ -91,8 +103,9 @@ public class TsDepServiceImpl extends SystemBaseServiceImpl<TsDepBO,String> impl
 			return tsDepBOs;
 		}
 
-		List<String> leadUserIdList = new ArrayList<String>();
-		List<String> pidList = new ArrayList<String>();
+		Set<String> leadUserIdList = new HashSet<String>();
+		Set<String> pidList = new HashSet<String>();
+		Set<String> organList = new HashSet<>();
 
 		for(TsDepBO bo : tsDepBOs)		{
 
@@ -101,6 +114,9 @@ public class TsDepServiceImpl extends SystemBaseServiceImpl<TsDepBO,String> impl
 			}
 			if(StringUtils.isNotEmpty( bo.getPid())){
 				pidList.add(bo.getPid());
+			}
+			if (StringUtils.isNotEmpty(bo.getOrganId())){
+				organList.add(bo.getOrganId());
 			}
 		}
 
@@ -128,6 +144,19 @@ public class TsDepServiceImpl extends SystemBaseServiceImpl<TsDepBO,String> impl
 					TsDepBO temp = map.get( tsDepBO.getPid() );
 					if(temp != null){
 						tsDepBO.setPname(temp.getDepName());
+					}
+				}
+			});
+		}
+
+		if (!organList.isEmpty()){
+			List<TsOrganBO> list = tsOrganDAO.selectBatchIds(organList);
+			Map<String,TsOrganBO> map = EntityUtil.list2Map(list);
+			tsDepBOs.forEach(tsDepBO -> {
+				if(StringUtils.isNotEmpty( tsDepBO.getOrganId())){
+					TsOrganBO temp = map.get( tsDepBO.getOrganId() );
+					if(temp != null){
+						tsDepBO.setOrganName(temp.getOrganName());
 					}
 				}
 			});

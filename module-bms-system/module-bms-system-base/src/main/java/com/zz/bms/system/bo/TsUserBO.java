@@ -54,13 +54,20 @@ public class TsUserBO extends TsUserEntity implements Serializable , IBoEntity ,
     @EntityAttrPageAnnotation(title = "系统管理人员",sort = 1301                      ,required=true )
     private String systemAdminName ;
 
+    @TableField(exist = false)
+    @EntityAttrFkAnnotation(group = "organId",  groupName = "机构" ,   dbColumnName = "organ_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsOrganBO.class)
+    @EntityAttrExcelAnnotation(excelProcess= "3")
+    @EntityAttrPageAnnotation(title = "机构",sort = 1401                      ,required=true )
+    private String organName ;
+
 
 
     @TableField(exist = false)
     @EntityAttrFkAnnotation(group = "depId",  groupName = "部门" ,   dbColumnName = "dep_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsDepBO.class)
     @EntityAttrExcelAnnotation(excelProcess= "3")
-    @EntityAttrPageAnnotation(title = "部门",sort = 1401                      ,required=true )
+    @EntityAttrPageAnnotation(title = "部门",sort = 1402                    ,required=true )
     private String depName ;
+
 
 
 
@@ -122,7 +129,9 @@ public class TsUserBO extends TsUserEntity implements Serializable , IBoEntity ,
         return  this.getLeadUserName();
     }
 
-
+    public void setOrganName(String organName) {
+        this.organName = organName;
+    }
 
     public boolean isTable() {
 
