@@ -55,17 +55,26 @@ public class TsUserBO extends TsUserEntity implements Serializable , IBoEntity ,
     private String systemAdminName ;
 
     @TableField(exist = false)
+    @EntityAttrFkAnnotation(group = "tenantId",  groupName = "企业" ,   dbColumnName = "tenant_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsTenantBO.class)
+    @EntityAttrExcelAnnotation(excelProcess= "3")
+    @EntityAttrPageAnnotation(title = "企业",sort = 1401                     ,required=true )
+    private String tenantName ;
+
+
+
+    @TableField(exist = false)
     @EntityAttrFkAnnotation(group = "organId",  groupName = "机构" ,   dbColumnName = "organ_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsOrganBO.class)
     @EntityAttrExcelAnnotation(excelProcess= "3")
-    @EntityAttrPageAnnotation(title = "机构",sort = 1401                      ,required=true )
+    @EntityAttrPageAnnotation(title = "机构",sort = 1402                      ,required=true )
     private String organName ;
+
 
 
 
     @TableField(exist = false)
     @EntityAttrFkAnnotation(group = "depId",  groupName = "部门" ,   dbColumnName = "dep_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsDepBO.class)
     @EntityAttrExcelAnnotation(excelProcess= "3")
-    @EntityAttrPageAnnotation(title = "部门",sort = 1402                    ,required=true )
+    @EntityAttrPageAnnotation(title = "部门",sort = 1403                    ,required=true )
     private String depName ;
 
 
@@ -106,14 +115,13 @@ public class TsUserBO extends TsUserEntity implements Serializable , IBoEntity ,
 
     @Override
     public String getOrganName() {
-        return null;
+        return this.organName;
     }
 
     @Override
     public String getTenantName() {
-        return this.getTenantName();
+        return this.tenantName;
     }
-
     @Override
     public boolean isSystemUser() {
         return EnumYesNo.YES.getCode().equals(super.getSystemAdmin());
@@ -131,6 +139,11 @@ public class TsUserBO extends TsUserEntity implements Serializable , IBoEntity ,
 
     public void setOrganName(String organName) {
         this.organName = organName;
+    }
+
+
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 
     public boolean isTable() {

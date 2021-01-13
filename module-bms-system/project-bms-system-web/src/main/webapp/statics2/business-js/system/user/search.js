@@ -35,7 +35,7 @@ function openSystemUserWin(config, callBack)
     options.callBack = callBack;
     options.url = url;
     options.columns = [[
-    {field:"id", checkbox: true, width: 40},
+        {field:"id", checkbox: true, width: 40},
         {field:"userName", title:"用户姓名", width: 150, align:"left" },
         {field:"phone", title:"电话", width: 150, align:"left" },
         {field:"email", title:"邮箱", width: 150, align:"left" }

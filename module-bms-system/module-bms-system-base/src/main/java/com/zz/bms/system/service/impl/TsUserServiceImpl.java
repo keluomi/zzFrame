@@ -5,12 +5,10 @@ import com.zz.bms.core.db.entity.EntityUtil;
 import com.zz.bms.core.enums.EnumErrorMsg;
 import com.zz.bms.core.exceptions.BizException;
 import com.zz.bms.enums.EnumDictType;
-import com.zz.bms.system.bo.TsDepBO;
-import com.zz.bms.system.bo.TsDictBO;
-import com.zz.bms.system.bo.TsOrganBO;
-import com.zz.bms.system.bo.TsUserBO;
+import com.zz.bms.system.bo.*;
 import com.zz.bms.system.dao.TsDepDAO;
 import com.zz.bms.system.dao.TsOrganDAO;
+import com.zz.bms.system.dao.TsTenantDAO;
 import com.zz.bms.system.dao.TsUserDAO;
 import com.zz.bms.system.service.TsDictService;
 import com.zz.bms.system.service.TsUserService;
@@ -43,6 +41,10 @@ public class TsUserServiceImpl extends SystemBaseServiceImpl<TsUserBO,String> im
 
 	@Autowired
 	private TsOrganDAO tsOrganDAO;
+
+	@Autowired
+	private TsTenantDAO tsTenantDAO;
+
 	@Autowired
 	private TsUserDAO tsUserDAO ;
 
@@ -84,6 +86,12 @@ public class TsUserServiceImpl extends SystemBaseServiceImpl<TsUserBO,String> im
 
 
 
+		if(StringUtils.isNotEmpty( tsUserBO.getTenantId())){
+			TsTenantBO temp = tsTenantDAO.selectById(tsUserBO.getTenantId());
+			if(temp != null){
+				tsUserBO.setTenantName(temp.getTenantName());
+			}
+		}
 		if(StringUtils.isNotEmpty( tsUserBO.getOrganId())){
 			TsOrganBO temp = tsOrganDAO.selectById(tsUserBO.getOrganId());
 			if(temp != null){
@@ -149,6 +157,8 @@ public class TsUserServiceImpl extends SystemBaseServiceImpl<TsUserBO,String> im
 					if(temp != null){
 						tsUserBO.setDepName(temp.getDepName());
 					}
+
+
 				}
 			});
 		}

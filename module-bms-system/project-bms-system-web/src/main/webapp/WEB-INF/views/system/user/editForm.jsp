@@ -24,7 +24,12 @@
                             <col style="width: 15%" />
                             <col style="width: 35%" />
                         </colgroup>
-                        
+                        <tr>
+                            <th>所属企业<font color="red">*</font></th>
+                            <td colspan="3" class="fd_tenantName">
+                               ${m.tenantName}
+                            </td>
+                        </tr>
                         <tr>
                             <th>用户名称</th>
                             <td class="fd_userName">${m.userName}</td>
@@ -99,7 +104,7 @@
                                 <c:if test="${ fn:indexOf(allQueryString,'&organId=')<0 }">
                                     <div class="input-group">
                                         <input type="text"  id="organName" name="organName" value="${m.organName}" class="form-control input-sm  organName "
-                                               placeholder="请选择上级部门" readonly="readonly" >
+                                               placeholder="请选择所属机构" readonly="readonly" >
                                         <input type="hidden" id="organId" name="organId" value="${m.organId}">
                                         <div class="input-group-btn">
                                             <button type="button" class="btn btn-primary btn-sm organName">
@@ -255,13 +260,19 @@
     $(function() {
 
 
+        var params = {
+            tenantId: '${m.tenantId}',
+            organId: '${m.organId}',
+            depId: '${m.depId}'
+        };
         //部门选择
-        $(".depName").OpenSystemDepSelectWin({
+        var depWin = $(".depName").OpenSystemDepSelectWin({
             title: "上级部门",
             selectType: "t1",
             callId: "depId",
             callName: "depName",
-            clearId: "clearDepId"
+            clearId: "clearDepId",
+            params: params
         });
 
         //人员选择
@@ -270,7 +281,8 @@
             selectType: "d1",
             callId: "leadUserId",
             callName: "leadUserName",
-            clearId: "clearLeadUserId"
+            clearId: "clearLeadUserId",
+            params: params
         });
 
         //选择机构
@@ -279,7 +291,12 @@
             selectType: "t1",
             callId: "organId",
             callName: "organName",
-            clearId: "clearOrganId"
+            clearId: "clearOrganId",
+            params: params
+        },function (id, name, obj){
+            params.organId = id;
+            depWin.tableTemple.search(params);
+
         });
     });
 

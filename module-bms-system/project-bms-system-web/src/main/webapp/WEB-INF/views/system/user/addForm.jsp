@@ -22,6 +22,34 @@
                         </colgroup>
 
                         <tbody>
+
+                        <c:if test="${systemAdmin}">
+                            <tr>
+                                <th>所属企业<font color="red">*</font></th>
+                                <td colspan="3">
+                                    <c:if test="${ fn:indexOf(allQueryString,'&tenantId=')>=0 }">
+                                        <input type="text" class="form-control input-sm" name="tenantName" id="tenantName" value="${ m.tenantName }" readonly>
+                                    </c:if>
+                                    <c:if test="${ fn:indexOf(allQueryString,'&tenantId=')<0 }">
+                                        <div class="input-group">
+                                            <input type="text"  id="tenantName" name="tenantName" value="${m.tenantName}" class="form-control input-sm  tenantName "
+                                                   placeholder="请选择所属企业" readonly="readonly" >
+                                            <input type="hidden" id="tenantId" name="tenantId" value="${m.tenantId}">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-primary btn-sm tenantName">
+                                                    <i class="fa fa-search-plus"></i>
+                                                </button>
+                                                <button type="button" id="clearTenantId" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-close"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </td>
+                            </tr>
+
+                        </c:if>
+
                         <tr>
                             <th>用户名称<font color="red">*</font></th>
                             <td><input type="text" class="form-control input-sm required"  placeholder="请输入用户名称"
@@ -52,7 +80,7 @@
                                 </c:if>
                                 <c:if test="${ fn:indexOf(allQueryString,'&organId=')<0 }">
                                     <div class="input-group">
-                                        <input type="text"  id="organName" name="organName" value="${m.pname}" class="form-control input-sm  organName "
+                                        <input type="text"  id="organName" name="organName" value="${m.organName}" class="form-control input-sm  organName "
                                                placeholder="请选择上级部门" readonly="readonly" >
                                         <input type="hidden" id="organId" name="organId" value="${m.organId}">
                                         <div class="input-group-btn">
@@ -179,6 +207,7 @@
 <script src="${staticUrl}/statics2/business-js/system/dep/search.js"></script>
 <script src="${staticUrl}/statics2/business-js/system/user/search.js"></script>
 <script src="${ staticUrl }/statics2/business-js/system/organ/search.js"></script>
+<script src="${ staticUrl }/statics2/business-js/system/tenant/search.js"></script>
 
 
 <script language="JavaScript">
@@ -186,6 +215,15 @@
 
     $(function() {
 
+
+        //企业选择
+        $(".tenantName").OpenSystemTenantSelectWin({
+            title: "直属领导",
+            selectType: "d1",
+            callId: "tenantId",
+            callName: "tenantName",
+            clearId: "clearTenantId"
+        });
 
         //部门选择
         $(".depName").OpenSystemDepSelectWin({

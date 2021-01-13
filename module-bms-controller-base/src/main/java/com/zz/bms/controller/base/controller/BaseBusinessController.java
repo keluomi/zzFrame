@@ -12,6 +12,7 @@ import com.zz.bms.core.exceptions.DbException;
 import com.zz.bms.core.vo.AjaxJson;
 import com.zz.bms.util.base.java.GenericsHelper;
 import com.zz.bms.util.configs.AppConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.ui.ModelMap;
@@ -196,6 +197,10 @@ public abstract class BaseBusinessController<
      * @param oldVal
      */
     protected RwModel setOldValue(RwModel newVal ,RwModel oldVal){
+        if (newVal.getTenantId() != null && StringUtils.isEmpty(newVal.getTenantId().toString())){
+
+            newVal.setTenantId(oldVal.getTenantId());
+        }
         return newVal;
     }
 
@@ -381,6 +386,8 @@ public abstract class BaseBusinessController<
      * @param model
      */
     protected void customInfoByViewForm(RwModel m, ModelMap model) {
+        ILoginUserEntity loginUser = (ILoginUserEntity)getSessionUser();
+        model.put("systemAdmin",loginUser.isSystemUser());
     }
 
 
@@ -399,6 +406,8 @@ public abstract class BaseBusinessController<
      * @param model
      */
     protected void customInfoByCreateForm(RwModel m, ModelMap model) {
+        ILoginUserEntity loginUser = (ILoginUserEntity)getSessionUser();
+        model.put("systemAdmin",loginUser.isSystemUser());
 
     }
 
@@ -429,6 +438,8 @@ public abstract class BaseBusinessController<
      */
     protected void customInfoByUpdateForm(RwModel m, ModelMap model) {
 
+        ILoginUserEntity loginUser = (ILoginUserEntity)getSessionUser();
+        model.put("systemAdmin",loginUser.isSystemUser());
     }
 
     /**

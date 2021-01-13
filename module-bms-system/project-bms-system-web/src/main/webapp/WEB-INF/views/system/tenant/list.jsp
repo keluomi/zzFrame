@@ -9,9 +9,75 @@
         <!-- 筛选条件表单开始 -->
         <form id="searchForm" onsubmit="return false" >
 
+            <div id='toolbar' style='height: 40px;     border-bottom: 2px solid #0896ba; '>
+                <div class="form-inline" role="form">
+
+                    <div class="form-group" style='margin-left: -15px;'>
+                        <input  class="form-control input-sm" style='width: 300px;'
+                                id="tenantCode" name='tenantCode' placeholder='企业编号' onkeydown='enterKeySearch(event, search);'>
+                    </div>
+                    <div class="form-group">
+                        <input  class="form-control input-sm" style='width: 300px;'
+                                id="tenantName" name='tenantName' placeholder='企业名称' onkeydown='enterKeySearch(event, search);'>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-sm" onclick='search();'><i class="fa fa-search"></i>&nbsp;查询</button>
+                    </div>
+                </div>
+            </div>
+
         </form>
 
         <div class="btn-bar" style="margin-left: -10px;">
+
+
+            <shiro:hasPermission name="system.tenant:add">
+                <button type="button" class="btn btn-primary btn-sm" onclick="toAdd()">
+                    <i class="fa fa-plus"></i>
+                    <span>新建 </span>
+                </button>
+            </shiro:hasPermission>
+
+
+            <shiro:hasPermission name="system.tenant:delete">
+                <button type="button" class="btn btn-primary btn-sm" url="" onclick="doDelete('url')">
+                    <i class="fa fa-trash"></i>
+                    <span>删除 </span>
+                </button>
+            </shiro:hasPermission>
+
+
+
+            <shiro:hasPermission name="system.tenant:exportExcel">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-download"></i>
+                        Excel导出 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+
+
+
+                        <li>
+                            <a href="${ctx}/${currParentUrl}/csv/export" class="export" >
+                                <i class="fa fa-download"></i>导出CSV
+                            </a>
+                        </li>
+                        <li>
+                            <a href="${ctx}/${currParentUrl}/hssf/export" class="export" >
+                                <i class="fa fa-download"></i>导出Excel2003
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="${ctx}/${currParentUrl}/sxssf/export" class="export" >
+                                <i class="fa fa-download"></i>导出Excel2007
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </shiro:hasPermission>
         </div>
     </div>
 </div>
