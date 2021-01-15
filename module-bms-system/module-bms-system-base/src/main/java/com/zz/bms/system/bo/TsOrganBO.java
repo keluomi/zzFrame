@@ -65,6 +65,11 @@ public class TsOrganBO extends TsOrganEntity implements Serializable , IBoEntity
     @EntityAttrPageAnnotation(title = "上级机构",sort = 501 )
     private String pname ;
 
+    @TableField(exist = false)
+    @EntityAttrFkAnnotation(group = "tenantId",  groupName = "企业" ,   dbColumnName = "tenant_name" , dbColumnType = "VARCHAR" , dbColumnLength = 100   , dbColumnNotNull = true , fkClass=com.zz.bms.system.bo.TsTenantBO.class)
+    @EntityAttrExcelAnnotation(excelProcess= "3")
+    @EntityAttrPageAnnotation(title = "企业",sort = 1401                     ,required=true )
+    private String tenantName ;
 
 
     public void setOrganTypeName(String organTypeName){
@@ -97,6 +102,14 @@ public class TsOrganBO extends TsOrganEntity implements Serializable , IBoEntity
 
     public void setPname(String pname) {
         this.pname = pname;
+    }
+
+    public String getTenantName() {
+        return tenantName;
+    }
+
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 
     public EasyUiTree toEasyUiTree(){
