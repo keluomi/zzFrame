@@ -27,7 +27,7 @@
 
                         <c:if test="${systemAdmin}">
                             <tr>
-                                <th>所属企业<font color="red">*</font></th>
+                                <th>租户<font color="red">*</font></th>
                                 <td colspan="3">
                                     <c:if test="${ fn:indexOf(allQueryString,'&tenantId=')>=0 }">
                                         <input type="text" class="form-control input-sm" name="tenantName" id="tenantName" value="${ m.tenantName }" readonly>
@@ -65,18 +65,11 @@
                                                placeholder="请输入机构代码" autocomplete="off"
                                                value="${ m.organCode }" id="organCode" name="organCode"
                                                    maxlength="20"  />
+                                        <%--目前几乎没有条线一说，所以类型默认机构即可--%>
+                                        <input type="hidden" name="organType" value="1" id="organType">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>机构类型</th>
-                                    <td>
-                                            <select id="organType"  name="organType"  style="width:98%">
-                                            <option value="" ></option>
-                                            <c:forEach items="${ organ_type_dicts }" var="dict">
-                                                <option value="${ dict.dictVal }" <c:if test="${ dict.dictVal == m.organType }">selected</c:if>>${ dict.dictName  }</option>
-                                            </c:forEach>
-                                            </select>
-                                    </td>
 
                                     <th>负责人</th>
                                     <td>
@@ -98,19 +91,6 @@
                                         </div>
                                         </c:if>
                                     </td>
-                                </tr>
-
-                                <tr>
-
-                                    <th>机构地址</th>
-                                    <td>
-                                        <input type="text"  class="form-control input-sm "
-                                               placeholder="请输入机构地址" autocomplete="off"
-                                               value="${ m.organAddr }" id="organAddr" name="organAddr"
-                                               maxlength="200"  />
-                                    </td>
-
-
 
                                     <th>上级机构</th>
                                     <td>
@@ -136,11 +116,22 @@
                                 </tr>
 
                                 <tr>
+
+                                    <th>机构地址</th>
+                                    <td colspan="3">
+                                        <input type="text"  class="form-control input-sm "
+                                               placeholder="请输入机构地址" autocomplete="off"
+                                               value="${ m.organAddr }" id="organAddr" name="organAddr"
+                                               maxlength="200"  />
+                                    </td>
+                                </tr>
+
+                                <tr>
                                     <th>备注</th>
                                     <td colspan="3">
 
                                         <div class="info-detail">
-                                            <textarea required="required" class="form-control input-sm required " maxlength="200" rows="6"
+                                            <textarea class="form-control input-sm  " maxlength="200" rows="6"
                                                       id="remark" name="remark" placeholder="请输入消息内容，200字以内" ><c:out value="${m.remark}" escapeXml="true"/></textarea>
                                         </div>
 

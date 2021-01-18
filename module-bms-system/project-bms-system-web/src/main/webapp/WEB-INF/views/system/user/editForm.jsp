@@ -24,12 +24,7 @@
                             <col style="width: 15%" />
                             <col style="width: 35%" />
                         </colgroup>
-                        <tr>
-                            <th>所属企业<font color="red">*</font></th>
-                            <td colspan="3" class="fd_tenantName">
-                               ${m.tenantName}
-                            </td>
-                        </tr>
+
                         <tr>
                             <th>用户名称</th>
                             <td class="fd_userName">${m.userName}</td>

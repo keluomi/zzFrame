@@ -25,6 +25,12 @@
                     </colgroup>
 
                     <tbody>
+                            <c:if test="${systemAdmin}">
+                                <tr>
+                                    <th>租户</th>
+                                    <td class="fd_tenantName" colspan="3">${m.tenantName}</td>
+                                </tr>
+                            </c:if>
                             <tr>
                                 <th>机构名称<font color="red">*</font></th>
                                 <td class="fd_organName">
@@ -37,29 +43,22 @@
                             </tr>
 
                             <tr>
-                                <th>机构类型</th>
-                                <td class="fd_organTypeName">
-                                    ${ m.organTypeName }
-                                </td>
-
                                 <th>负责人</th>
                                 <td class="fd_leadUserName">
                                     <c:out value="${ m.leadUserName }" escapeXml="true"/>
+                                </td>
+                                <th>上级机构</th>
+                                <td class="fd_pname" >
+                                    <c:out value="${ m.pname }" escapeXml="true"/>
                                 </td>
                             </tr>
 
                             <tr>
 
                                 <th>机构地址</th>
-                                <td class="fd_organAddr" >
+                                <td class="fd_organAddr" colspan="3">
                                     <c:out value="${ m.organAddr }" escapeXml="true"/>
                                 </td>
-
-                                <th>上级机构</th>
-                                <td class="fd_pname" >
-                                    <c:out value="${ m.pname }" escapeXml="true"/>
-                                </td>
-
                             </tr>
 
                             <tr>
@@ -104,15 +103,6 @@
                             </tr>
 
                             <tr>
-                                <th>机构类型</th>
-                                <td>
-                                        <select id="organType"  name="organType"  style="width:98%">
-                                            <option value="" ></option>
-                                            <c:forEach items="${ organ_type_dicts }" var="dict">
-                                                <option value="${ dict.dictVal }" <c:if test="${ dict.dictVal == m.organType }">selected</c:if>>${ dict.dictName  }</option>
-                                            </c:forEach>
-                                        </select>
-                                </td>
 
 
                                 <th>负责人</th>
@@ -135,16 +125,6 @@
                                     </div>
                                     </c:if>
                                 </td>
-                            </tr>
-
-                            <tr>
-                                <th>机构地址</th>
-                                <td colspan="1">
-                                    <input type="text"  class="form-control input-sm "
-                                           placeholder="请输入机构地址" autocomplete="off"
-                                           value="${ m.organAddr }" id="organAddr" name="organAddr"
-                                           maxlength="200"  />
-                                </td>
 
                                 <th>上级机构</th>
                                 <td>
@@ -152,20 +132,31 @@
                                         <input type="text" class="form-control input-sm" name="pname" id="pname" value="${ m.pname }" readonly>
                                     </c:if>
                                     <c:if test="${ fn:indexOf(allQueryString,'&pid=')<0 }">
-                                    <div class="input-group">
-                                        <input type="hidden" name="pid" id="pid" value="${ m.pid }" >
-                                        <input type="text" name="pname" id="pname" value="${ m.pname }"  class="form-control input-sm pname " placeholder="请选择上级机构" style="cursor: pointer;" readonly="readonly">
-                                        <div class="input-group-btn">
-                                            <button type="button"  class="btn btn-primary btn-sm pname">
-                                                &nbsp;<i class="fa fa-search"></i>&nbsp;
-                                            </button>
-                                            <button type="button" id="clearPid"   class="btn btn-primary btn-sm">
-                                                &nbsp;<i class="fa fa-close"></i>&nbsp;
-                                            </button>
+                                        <div class="input-group">
+                                            <input type="hidden" name="pid" id="pid" value="${ m.pid }" >
+                                            <input type="text" name="pname" id="pname" value="${ m.pname }"  class="form-control input-sm pname " placeholder="请选择上级机构" style="cursor: pointer;" readonly="readonly">
+                                            <div class="input-group-btn">
+                                                <button type="button"  class="btn btn-primary btn-sm pname">
+                                                    &nbsp;<i class="fa fa-search"></i>&nbsp;
+                                                </button>
+                                                <button type="button" id="clearPid"   class="btn btn-primary btn-sm">
+                                                    &nbsp;<i class="fa fa-close"></i>&nbsp;
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
                                     </c:if>
                                 </td>
+                            </tr>
+
+                            <tr>
+                                <th>机构地址</th>
+                                <td colspan="3">
+                                    <input type="text"  class="form-control input-sm "
+                                           placeholder="请输入机构地址" autocomplete="off"
+                                           value="${ m.organAddr }" id="organAddr" name="organAddr"
+                                           maxlength="200"  />
+                                </td>
+
 
                             </tr>
 

@@ -7,8 +7,10 @@ import com.zz.bms.core.exceptions.BizException;
 import com.zz.bms.enums.EnumDictType;
 import com.zz.bms.system.bo.TsDictBO;
 import com.zz.bms.system.bo.TsOrganBO;
+import com.zz.bms.system.bo.TsTenantBO;
 import com.zz.bms.system.bo.TsUserBO;
 import com.zz.bms.system.dao.TsOrganDAO;
+import com.zz.bms.system.dao.TsTenantDAO;
 import com.zz.bms.system.dao.TsUserDAO;
 import com.zz.bms.system.service.TsDictService;
 import com.zz.bms.system.service.TsOrganService;
@@ -42,6 +44,8 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 	@Autowired
 	private TsOrganDAO tsOrganDAO ;
 
+	@Autowired
+	private TsTenantDAO tsTenantDAO;
 
 
 	@Override
@@ -88,6 +92,13 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 			}
 		}
 
+
+		if(StringUtils.isNotEmpty( tsOrganBO.getTenantId())){
+			TsTenantBO temp = tsTenantDAO.selectById(tsOrganBO.getTenantId());
+			if(temp != null){
+				tsOrganBO.setTenantName(temp.getTenantName());
+			}
+		}
 		return tsOrganBO;
 
 	}
@@ -104,6 +115,7 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 
 		List<String> leadUserIdList = new ArrayList<String>();
 		List<String> pidList = new ArrayList<String>();
+		List<String> tendIdList = new ArrayList<String>();
 
 		for(TsOrganBO bo : tsOrganBOs)		{
 
@@ -113,6 +125,10 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 
 			if(StringUtils.isNotEmpty( bo.getPid())){
 				pidList.add(bo.getPid());
+			}
+
+			if (StringUtils.isNotEmpty(bo.getTenantId())){
+				tendIdList.add(bo.getTenantId());
 			}
 		}
 
@@ -134,13 +150,21 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 
 		if(!pidList.isEmpty()){
 			List<TsOrganBO> list =  tsOrganDAO.selectBatchIds(pidList);
+			List<TsTenantBO> tendList = tsTenantDAO.selectBatchIds(tendIdList);
 			Map<String,TsOrganBO> map = EntityUtil.list2Map(list);
+			Map<String,TsTenantBO> tendMap = EntityUtil.list2Map(tendList);
 
 			tsOrganBOs.forEach(tsOrganBO -> {
 				if(StringUtils.isNotEmpty( tsOrganBO.getPid())){
 					TsOrganBO temp = map.get( tsOrganBO.getPid() );
 					if(temp != null){
 						tsOrganBO.setPname(temp.getOrganName());
+					}
+				}
+				if (StringUtils.isNotEmpty(tsOrganBO.getTenantId())){
+					TsTenantBO  tendBo = tendMap.get(tsOrganBO.getTenantId());
+					if (tendBo != null){
+						tsOrganBO.setTenantName(tendBo.getTenantName());
 					}
 				}
 			});
@@ -152,6 +176,9 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 		Map<String , TsDictBO> dictMap = tsDictService.allDict(dictTypes);
 
 		tsOrganBOs.forEach(tsOrganBO -> {
+
+
+
 			if(StringUtils.isEmpty(tsOrganBO.getOrganTypeName()) && StringUtils.isNotEmpty(tsOrganBO.getOrganType()) ) {
 				TsDictBO dict = dictMap.get(EnumDictType.ORGAN_TYPE.getVal() + tsOrganBO.getOrganType());
 				if(dict != null) {

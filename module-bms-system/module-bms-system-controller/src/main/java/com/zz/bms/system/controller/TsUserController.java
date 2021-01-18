@@ -8,14 +8,14 @@ import com.zz.bms.core.vo.AjaxJson;
 import com.zz.bms.enums.EnumUserStatus;
 import com.zz.bms.enums.EnumYesNo;
 import com.zz.bms.shiro.utils.ShiroUtils;
-import com.zz.bms.system.bo.TsFileUseBO;
-import com.zz.bms.system.bo.TsUserBO;
-import com.zz.bms.system.bo.VsUserBO;
+import com.zz.bms.system.bo.*;
 import com.zz.bms.system.domain.TsUserEntity;
 import com.zz.bms.system.query.impl.TsUserQueryWebImpl;
 import com.zz.bms.system.query.impl.VsUserQueryWebImpl;
 import com.zz.bms.system.service.TsDictService;
 import com.zz.bms.system.service.TsFileUseService;
+import com.zz.bms.system.service.TsOrganService;
+import com.zz.bms.system.service.TsTenantService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -47,6 +47,11 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 
 	@Autowired
 	private TsFileUseService tsFileUseService;
+	
+	
+	@Autowired
+	private TsOrganService tsOrganService;
+	
 
 
 
@@ -59,6 +64,10 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 
 	@Override
 	public void setCustomInfoByInsert(TsUserBO tsUserBO , ILoginUserEntity<String> sessionUser){
+		
+		String organId = tsUserBO.getOrganId();
+		TsOrganBO organ = tsOrganService.getById(organId);
+		tsUserBO.setTenantId(organ.getTenantId());
 		tsUserBO.setUserStatus(EnumUserStatus.normal.getVal());
 		tsUserBO.setUserStatusName(EnumUserStatus.normal.getLabel());
 		tsUserBO.setOrganId(sessionUser.getOrganId());
