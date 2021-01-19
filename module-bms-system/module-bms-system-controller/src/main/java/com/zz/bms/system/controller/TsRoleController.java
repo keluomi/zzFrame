@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 角色 控制层
@@ -64,8 +65,22 @@ public class TsRoleController extends ZzGroupDefaultController<TsRoleGroupBO, Ts
     private TsDictService tsDictService;
 
 
+    @Autowired
+    private TsUserRoleService tsUserRoleService;
+
+    @Autowired
+    private TsMenuPermitService tsMenuPermitService;
+
+
 	private static List<EasyUiTree> allPermit = null;
 
+
+    @Override
+    protected void processOnlyQuery(TsRoleQueryWebImpl query, TsRoleGroupBO m, ILoginUserEntity<String> sessionUserVO) {
+
+        String tenantId = sessionUserVO.getTenantId();
+        query.setTenantId(tenantId);
+    }
 
     /**
      * 收集信息 ，补齐 TsRoleGroupBO 的内容
@@ -169,6 +184,55 @@ public class TsRoleController extends ZzGroupDefaultController<TsRoleGroupBO, Ts
     }
 
 
+    /**
+     * 根据角色查询菜单列表
+     * @param roleId
+     * @return
+     */
+    private List<EasyUiTree> getPermitTreeByRole(String roleId){
+
+
+        List<EasyUiTree> roleAllPermit = new ArrayList<>();
+        List<EasyUiTree> trees = new ArrayList<EasyUiTree>();
+
+        QueryWrapper<TsRolePermitBO> tsRolePermitBOQueryWrapper = new QueryWrapper<>();
+        tsRolePermitBOQueryWrapper.lambda().eq(TsRolePermitBO::getRoleId, roleId);
+        List<TsRolePermitBO> rolePermitList = rolePermitService.list(tsRolePermitBOQueryWrapper);
+
+        QueryWrapper<VsMenuPermitBO> tsMenuPermitBOQueryWrapper = new QueryWrapper<>();
+        List<String> permitList = rolePermitList.stream().map(item -> item.getPermitId()).collect(Collectors.toList());
+        tsMenuPermitBOQueryWrapper.lambda().in(VsMenuPermitBO::getPermitId, permitList);
+        List<VsMenuPermitBO> menuPermits = menuPermitService.list(tsMenuPermitBOQueryWrapper);
+
+        List<String> menuIdList = menuPermits.stream().map(item -> item.getMenuId()).collect(Collectors.toList());
+        QueryWrapper<TsMenuBO> menuBOQueryWrapper = new QueryWrapper<>();
+        menuBOQueryWrapper.lambda().in(TsMenuBO::getId, menuIdList);
+        List<TsMenuBO> menus = menuService.list(menuBOQueryWrapper);
+
+        List<EasyUiTree> easyUiTrees = getAllPermitTree();
+
+        for (TsMenuBO menu : menus) {
+            List<EasyUiTree> parentTrees = EasyUiTreeUtil.getParentNodes(easyUiTrees,menu.getId());
+            for (EasyUiTree m: parentTrees){
+                if(!trees.contains(m)){
+                    trees.add(m);
+                }
+            }
+        }
+        for (VsMenuPermitBO menuPermit : menuPermits) {
+            trees.add(menuPermit.toEasyUiTree());
+        }
+
+
+
+
+        roleAllPermit = trees;
+        try {
+            return (List<EasyUiTree>) MyBeanUtils.deepCopy(roleAllPermit);
+        }catch(Exception e){
+            throw new BizException(0,"出现错误，请重试");
+        }
+    }
 
 
     /**
@@ -242,7 +306,21 @@ public class TsRoleController extends ZzGroupDefaultController<TsRoleGroupBO, Ts
 	@ResponseBody
 	public List<EasyUiTree> permitTree(@PathVariable("roleId") String roleId){
 
-        List<EasyUiTree> easyUiTrees = getAllPermitTree();
+
+        ILoginUserEntity<String> sessionUser = getSessionUser();
+        List<EasyUiTree> easyUiTrees = null;
+        //如果不是管理员，添加新用户菜单权限小于等于自己的菜单权限
+        if (!sessionUser.isSystemUser()){
+            String userId = sessionUser.getId();
+            QueryWrapper<TsUserRoleBO> tsUserRoleBOQueryWrapper = new QueryWrapper<>();
+            tsUserRoleBOQueryWrapper.lambda().eq(TsUserRoleBO::getUserId, userId);
+            TsUserRoleBO userRoleBO = tsUserRoleService.getOne(tsUserRoleBOQueryWrapper);
+            String myRoleId = userRoleBO.getRoleId();
+            easyUiTrees = getPermitTreeByRole(myRoleId);
+
+        }else {
+            easyUiTrees = getAllPermitTree();
+        }
         List<String> rolePermitIds = null;
 
         if(StringUtils.isNotEmpty(roleId) && !"0".equals(roleId)){
