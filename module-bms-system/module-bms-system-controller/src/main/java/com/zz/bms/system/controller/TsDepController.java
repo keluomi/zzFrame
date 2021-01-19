@@ -27,6 +27,15 @@ public class TsDepController extends ZzDefaultSimpleController<TsDepBO, String ,
 
 
 	@Override
+	protected void processOnlyQuery(TsDepQueryWebImpl query, TsDepBO m, ILoginUserEntity<String> sessionUserVO) {
+		String tenantId = sessionUserVO.getTenantId();
+		boolean systemUser = sessionUserVO.isSystemUser();
+		if (!systemUser){
+			query.setTenantId(tenantId);
+		}
+	}
+
+	@Override
 	public void setCustomInfoByInsert(TsDepBO tsDepBO , ILoginUserEntity<String> sessionUser){
 
 		TsOrganBO organ = tsOrganService.getById(tsDepBO.getOrganId());

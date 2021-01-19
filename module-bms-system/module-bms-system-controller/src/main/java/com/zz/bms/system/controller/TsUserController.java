@@ -51,8 +51,16 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 	
 	@Autowired
 	private TsOrganService tsOrganService;
-	
 
+
+	@Override
+	protected void processOnlyQuery(VsUserQueryWebImpl query, VsUserBO m, ILoginUserEntity<String> sessionUserVO) {
+		String tenantId = sessionUserVO.getTenantId();
+		boolean systemUser = sessionUserVO.isSystemUser();
+		if (!systemUser){
+			query.setTenantId(tenantId);
+		}
+	}
 
 
 	@Override
@@ -70,7 +78,6 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 		tsUserBO.setTenantId(organ.getTenantId());
 		tsUserBO.setUserStatus(EnumUserStatus.normal.getVal());
 		tsUserBO.setUserStatusName(EnumUserStatus.normal.getLabel());
-		tsUserBO.setOrganId(sessionUser.getOrganId());
 		tsUserBO.setPageLimit(100);
 		tsUserBO.setSystemAdmin(EnumYesNo.NO.getCode());
 		tsUserBO.setSystemAdminName(EnumYesNo.NO.getCode());

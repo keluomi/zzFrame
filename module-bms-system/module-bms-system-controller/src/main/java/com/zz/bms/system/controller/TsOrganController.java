@@ -41,6 +41,16 @@ public class TsOrganController extends ZzDefaultSimpleController<TsOrganBO, Stri
 	private TsDictService tsDictService;
 
 	@Override
+	protected void processOnlyQuery(TsOrganQueryWebImpl query, TsOrganBO m, ILoginUserEntity<String> sessionUserVO) {
+
+		String tenantId = sessionUserVO.getTenantId();
+		boolean systemUser = sessionUserVO.isSystemUser();
+		if (!systemUser){
+			query.setTenantId(tenantId);
+		}
+	}
+
+	@Override
 	public void setCustomInfoByInsert(TsOrganBO bo , ILoginUserEntity<String> sessionUser){
 
 		bo.setOrganStatus(EnumRoleStatus.normal.getVal());

@@ -88,6 +88,7 @@
                             <tr>
                                 <th>机构名称<font color="red">*</font></th>
                                 <td>
+
                                         <input type="text" required="required" class="form-control input-sm required"
                                                placeholder="请输入机构名称" autocomplete="off"
                                                value="${ m.organName }" id="organName" name="organName"

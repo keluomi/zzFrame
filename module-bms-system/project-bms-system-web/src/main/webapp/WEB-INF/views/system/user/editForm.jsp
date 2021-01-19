@@ -71,8 +71,11 @@
 
                         <tr>
                             <th>用户名称<font color="red">*</font></th>
-                            <td><input type="text" class="form-control input-sm required"  placeholder="请输入用户名称"
-                                       value="${m.userName}" id="userName" name="userName" minlength="2" maxlength='50'/></td>
+                            <td>
+                                <input type="text" class="form-control input-sm required"  placeholder="请输入用户名称"
+                                       value="${m.userName}" id="userName" name="userName" minlength="2" maxlength='50'/>
+                                <input type="hidden" name="tenantId" id="tenantId" value="${m.tenantId}">
+                            </td>
 
                             <th>用户登录名<font color="red">*</font></th>
                             <td><input type="text" class="form-control input-sm required"  placeholder="请输入用户登录名"  autocomplete="off"
