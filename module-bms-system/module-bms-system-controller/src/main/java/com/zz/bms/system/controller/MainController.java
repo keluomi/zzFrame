@@ -130,7 +130,7 @@ public class MainController extends BaseController {
             qw.orderByAsc("level");
             List<VsUserMenuBO> menus = vsUserMenuService.list(qw);
 
-            if(menus != null && !menus.isEmpty() && !loginUser.isSystemUser()) {
+            if(menus != null && !menus.isEmpty() && !loginUser.isSystemAdminUser()) {
 
                 List<TsMenuBO> parentMenus = MenuLogic.getAllParentMenusByView(tsMenuService.list() , menus);
                 if(parentMenus != null && !parentMenus.isEmpty()) {

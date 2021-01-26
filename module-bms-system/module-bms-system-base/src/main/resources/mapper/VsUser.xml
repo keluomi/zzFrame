@@ -30,6 +30,8 @@
 
          	<result column="system_admin" property="systemAdmin"/>
 
+			<result column="company_admin" property="companyAdmin"/>
+
          	<result column="dep_id" property="depId"/>
 
          	<result column="organ_id" property="organId"/>
@@ -82,6 +84,7 @@
 					<if test="openId != null and openId != ''"> AND T.open_id = #{openId} </if>
 					<if test="unionId != null and unionId != ''"> AND T.union_id = #{unionId} </if>
 					<if test="systemAdmin != null and systemAdmin != ''"> AND T.system_admin = #{systemAdmin} </if>
+					<if test="companyAdmin != null and companyAdmin != ''"> AND T.company_admin = #{companyAdmin} </if>
 					<if test="depId != null and depId != ''"> AND T.dep_id = #{depId} </if>
 					<if test="organId != null and organId != ''"> AND T.organ_id = #{organId} </if>
 					<if test="pageLimit != null"> AND T.page_limit = #{pageLimit} </if>

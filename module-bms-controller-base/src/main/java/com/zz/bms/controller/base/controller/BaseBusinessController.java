@@ -387,7 +387,7 @@ public abstract class BaseBusinessController<
      */
     protected void customInfoByViewForm(RwModel m, ModelMap model) {
         ILoginUserEntity loginUser = (ILoginUserEntity)getSessionUser();
-        model.put("systemAdmin",loginUser.isSystemUser());
+        model.put("systemAdmin",loginUser.isSystemAdminUser());
     }
 
 
@@ -407,7 +407,7 @@ public abstract class BaseBusinessController<
      */
     protected void customInfoByCreateForm(RwModel m, ModelMap model) {
         ILoginUserEntity loginUser = (ILoginUserEntity)getSessionUser();
-        model.put("systemAdmin",loginUser.isSystemUser());
+        model.put("systemAdmin",loginUser.isSystemAdminUser());
 
     }
 
@@ -439,7 +439,7 @@ public abstract class BaseBusinessController<
     protected void customInfoByUpdateForm(RwModel m, ModelMap model) {
 
         ILoginUserEntity loginUser = (ILoginUserEntity)getSessionUser();
-        model.put("systemAdmin",loginUser.isSystemUser());
+        model.put("systemAdmin",loginUser.isSystemAdminUser());
     }
 
     /**

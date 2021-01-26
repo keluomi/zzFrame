@@ -78,7 +78,7 @@ public class UserServiceImpl implements IUserService<String> {
 
     @Override
     public List<ILoginPermitEntity> getUserPermitInfo(ILoginUserEntity loginUserEntity) {
-        if(EnumYesNo.YES.getCode().equals(loginUserEntity.isSystemUser())) {
+        if(EnumYesNo.YES.getCode().equals(loginUserEntity.isSystemAdminUser())) {
             //系统管理人查询所有的许可
             TsPermitQuery query = new TsPermitQueryImpl();
             query.deleteFlag(EnumYesNo.NO.getCode());

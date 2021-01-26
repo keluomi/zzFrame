@@ -3,11 +3,6 @@ package com.zz.bms.system.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.zz.bms.util.configs.annotaions.*;
 
-import com.zz.bms.core.Constant;
-import java.sql.Timestamp;
-import java.lang.String;
-import java.lang.Integer;
-import com.zz.bms.core.db.entity.BaseBusinessExEntity;
 /**
  * 用户 实体类
  * @author Administrator
@@ -101,6 +96,13 @@ public class TsUserEntity extends com.zz.bms.core.db.entity.BaseBusinessExEntity
     @EntityAttrPageAnnotation(title = "系统管理人员",sort = 1300  , pageElement = "select"            , maxLength = 1        ,required=true )
     //yes_no        
 	private String  systemAdmin ;
+
+
+    @EntityAttrDictAnnotation(group = "companyAdmin", groupName = "企业管理人员" ,  dbColumnName = "dict_val" , dbColumnLength = 2 , isValueField = true , dictType = "yes_no")
+    @EntityAttrDBAnnotation(attrName="企业管理人员" ,attrColumn="company_admin"  , type = "CHAR"      ,  attrLength = 1 , notNull = true )
+    @EntityAttrPageAnnotation(title = "企业管理人员",sort = 1300  , pageElement = "select"            , maxLength = 1        ,required=true )
+    //yes_no
+	private String  companyAdmin ;
 
 
 
@@ -261,6 +263,11 @@ public class TsUserEntity extends com.zz.bms.core.db.entity.BaseBusinessExEntity
     	return this.remark;
     }
 
+	public String getCompanyAdmin() {
+		return companyAdmin;
+	}
 
-	
+	public void setCompanyAdmin(String companyAdmin) {
+		this.companyAdmin = companyAdmin;
+	}
 }

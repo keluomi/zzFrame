@@ -310,7 +310,7 @@ public class TsRoleController extends ZzGroupDefaultController<TsRoleGroupBO, Ts
         ILoginUserEntity<String> sessionUser = getSessionUser();
         List<EasyUiTree> easyUiTrees = null;
         //如果不是管理员，添加新用户菜单权限小于等于自己的菜单权限
-        if (!sessionUser.isSystemUser()){
+        if (!sessionUser.isSystemAdminUser()){
             String userId = sessionUser.getId();
             QueryWrapper<TsUserRoleBO> tsUserRoleBOQueryWrapper = new QueryWrapper<>();
             tsUserRoleBOQueryWrapper.lambda().eq(TsUserRoleBO::getUserId, userId);

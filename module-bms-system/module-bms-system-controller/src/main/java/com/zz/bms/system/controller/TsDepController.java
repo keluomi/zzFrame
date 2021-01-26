@@ -29,7 +29,7 @@ public class TsDepController extends ZzDefaultSimpleController<TsDepBO, String ,
 	@Override
 	protected void processOnlyQuery(TsDepQueryWebImpl query, TsDepBO m, ILoginUserEntity<String> sessionUserVO) {
 		String tenantId = sessionUserVO.getTenantId();
-		boolean systemUser = sessionUserVO.isSystemUser();
+		boolean systemUser = sessionUserVO.isSystemAdminUser();
 		if (!systemUser){
 			query.setTenantId(tenantId);
 		}

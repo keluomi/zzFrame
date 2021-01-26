@@ -56,7 +56,7 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 	@Override
 	protected void processOnlyQuery(VsUserQueryWebImpl query, VsUserBO m, ILoginUserEntity<String> sessionUserVO) {
 		String tenantId = sessionUserVO.getTenantId();
-		boolean systemUser = sessionUserVO.isSystemUser();
+		boolean systemUser = sessionUserVO.isSystemAdminUser();
 		if (!systemUser){
 			query.setTenantId(tenantId);
 		}

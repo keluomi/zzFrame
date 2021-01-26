@@ -44,7 +44,7 @@ public class TsOrganController extends ZzDefaultSimpleController<TsOrganBO, Stri
 	protected void processOnlyQuery(TsOrganQueryWebImpl query, TsOrganBO m, ILoginUserEntity<String> sessionUserVO) {
 
 		String tenantId = sessionUserVO.getTenantId();
-		boolean systemUser = sessionUserVO.isSystemUser();
+		boolean systemUser = sessionUserVO.isSystemAdminUser();
 		if (!systemUser){
 			query.setTenantId(tenantId);
 		}

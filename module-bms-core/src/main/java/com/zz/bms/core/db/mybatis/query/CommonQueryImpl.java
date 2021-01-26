@@ -18,6 +18,10 @@ public class CommonQueryImpl<M,PK extends Serializable> extends QueryImpl<M,PK> 
     public String rbac ;
 
 
+    protected String tenantId;
+
+
+
     public String getKeyword() {
         return keyword;
     }
@@ -32,5 +36,13 @@ public class CommonQueryImpl<M,PK extends Serializable> extends QueryImpl<M,PK> 
 
     public void setRbac(String rbac) {
         this.rbac = rbac;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }

@@ -123,8 +123,14 @@ public class TsUserBO extends TsUserEntity implements Serializable , IBoEntity ,
         return this.tenantName;
     }
     @Override
-    public boolean isSystemUser() {
+    public boolean isSystemAdminUser() {
         return EnumYesNo.YES.getCode().equals(super.getSystemAdmin());
+    }
+
+
+    @Override
+    public boolean isCompanyAdminUser() {
+        return EnumYesNo.YES.getCode().equals(super.getCompanyAdmin());
     }
 
     @Override

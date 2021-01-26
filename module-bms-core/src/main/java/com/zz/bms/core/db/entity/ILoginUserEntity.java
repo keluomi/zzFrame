@@ -84,7 +84,14 @@ public interface ILoginUserEntity<PK extends Serializable> {
      * 是否为系统用户
      * @return
      */
-    public boolean isSystemUser() ;
+    public boolean isSystemAdminUser() ;
+
+
+    /**
+     * 是否为企业管理员
+     * @return
+     */
+    public boolean isCompanyAdminUser() ;
 
 
 
