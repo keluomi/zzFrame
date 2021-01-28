@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zz.bms.core.db.entity.BaseEntity;
 import com.zz.bms.core.db.entity.ILoginUserEntity;
+import com.zz.bms.core.db.mybatis.query.CommonQueryImpl;
 import com.zz.bms.core.db.mybatis.query.Query;
 import com.zz.bms.core.enums.EnumErrorMsg;
 import com.zz.bms.core.ui.Pages;
@@ -55,7 +56,7 @@ public abstract class BaseGroupExcelController <
         RwModel extends BaseEntity<PK>,
         QueryModel extends RwModel,
         PK extends Serializable,
-        RwQuery extends Query,
+        RwQuery extends CommonQueryImpl,
         OnlyQuery extends RwQuery>
         extends BaseGroupCURDController<RwModel,QueryModel,PK,RwQuery,OnlyQuery>
         implements IExcelConttroller<RwModel,QueryModel,PK>{

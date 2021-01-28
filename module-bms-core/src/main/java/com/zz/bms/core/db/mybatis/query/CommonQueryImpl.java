@@ -20,6 +20,8 @@ public class CommonQueryImpl<M,PK extends Serializable> extends QueryImpl<M,PK> 
 
     protected String tenantId;
 
+    protected String organId;
+
 
 
     public String getKeyword() {
@@ -44,5 +46,13 @@ public class CommonQueryImpl<M,PK extends Serializable> extends QueryImpl<M,PK> 
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(String organId) {
+        this.organId = organId;
     }
 }

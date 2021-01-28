@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zz.bms.core.Constant;
 import com.zz.bms.core.db.base.service.BaseService;
 import com.zz.bms.core.db.entity.*;
+import com.zz.bms.core.db.mybatis.query.CommonQueryImpl;
 import com.zz.bms.core.db.mybatis.query.Query;
 import com.zz.bms.core.enums.EnumErrorMsg;
 import com.zz.bms.core.exceptions.DbException;
@@ -34,7 +35,7 @@ public abstract class BaseBusinessController<
         QueryModel extends RwModel,
         PK extends Serializable,
         RwQuery extends Query,
-        OnlyQuery extends Query
+        OnlyQuery extends CommonQueryImpl
         > extends BaseCommonController<PK> implements IController<RwModel , QueryModel , PK> {
 
 
@@ -197,9 +198,15 @@ public abstract class BaseBusinessController<
      * @param oldVal
      */
     protected RwModel setOldValue(RwModel newVal ,RwModel oldVal){
-        if (newVal.getTenantId() != null && StringUtils.isEmpty(newVal.getTenantId().toString())){
+        if (newVal.getTenantId() == null || StringUtils.isEmpty(newVal.getTenantId().toString())){
 
             newVal.setTenantId(oldVal.getTenantId());
+        }
+
+        if (newVal.getOrganId() == null || StringUtils.isEmpty(newVal.getOrganId().toString())){
+
+            ILoginUserEntity<PK> sessionUser = getSessionUser();
+            newVal.setOrganId(sessionUser.getOrganId());
         }
         return newVal;
     }
@@ -338,6 +345,17 @@ public abstract class BaseBusinessController<
      * @param query
      */
     protected void processOnlyQuery(OnlyQuery query , QueryModel m  , ILoginUserEntity<PK> sessionUserVO){
+
+
+        if (!sessionUserVO.isSystemAdminUser()) {
+
+            String tenantId = (String) sessionUserVO.getTenantId();
+            String organId = (String) sessionUserVO.getOrganId();
+            query.setTenantId(tenantId);
+            if (!sessionUserVO.isCompanyAdminUser()) {
+                query.setOrganId(organId);
+            }
+        }
 
     }
 

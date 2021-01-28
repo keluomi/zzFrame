@@ -8,6 +8,7 @@ import com.zz.bms.core.db.entity.BaseBusinessEntity;
 import com.zz.bms.core.db.entity.BaseEntity;
 import com.zz.bms.core.db.entity.EntityUtil;
 import com.zz.bms.core.db.entity.ILoginUserEntity;
+import com.zz.bms.core.db.mybatis.query.CommonQueryImpl;
 import com.zz.bms.core.db.mybatis.query.Query;
 import com.zz.bms.core.enums.EnumErrorMsg;
 import com.zz.bms.core.enums.EnumSymbol;
@@ -48,7 +49,7 @@ public abstract class   BaseGroupCURDController<
         RwModel extends BaseEntity<PK>,
         QueryModel extends RwModel,
         PK extends Serializable,
-        RwQuery extends Query,
+        RwQuery extends CommonQueryImpl,
         OnlyQuery extends RwQuery
         >
         extends BaseBusinessController<RwModel,QueryModel,PK,RwQuery,OnlyQuery>
