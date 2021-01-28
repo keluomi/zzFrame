@@ -127,13 +127,7 @@ public abstract class BaseCURDController<
             processOnlyQuery(query, m, sessionUserVO);
 
             Wrapper wrapper = buildQueryWrapper(query, m);
-
-
-            if (isQueryDB()){
-
-                page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
-            }
-
+            page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
             processResult(page.getRecords());
 
             return toList(page);
@@ -237,11 +231,7 @@ public abstract class BaseCURDController<
             }
 
 
-            if (isQueryDB()){
-
-                page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
-            }
-
+            page = (Page<QueryModel>) baseQueryService.page(page, wrapper);
             processResult(page.getRecords());
 
 
