@@ -35,7 +35,7 @@ public abstract class BaseBusinessController<
         QueryModel extends RwModel,
         PK extends Serializable,
         RwQuery extends Query,
-        OnlyQuery extends CommonQueryImpl
+        OnlyQuery extends Query
         > extends BaseCommonController<PK> implements IController<RwModel , QueryModel , PK> {
 
 
@@ -345,17 +345,6 @@ public abstract class BaseBusinessController<
      * @param query
      */
     protected void processOnlyQuery(OnlyQuery query , QueryModel m  , ILoginUserEntity<PK> sessionUserVO){
-
-
-        if (!sessionUserVO.isSystemAdminUser()) {
-
-            String tenantId = (String) sessionUserVO.getTenantId();
-            String organId = (String) sessionUserVO.getOrganId();
-            query.setTenantId(tenantId);
-            if (!sessionUserVO.isCompanyAdminUser()) {
-                query.setOrganId(organId);
-            }
-        }
 
     }
 

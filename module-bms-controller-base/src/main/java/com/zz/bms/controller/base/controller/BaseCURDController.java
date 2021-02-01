@@ -38,8 +38,8 @@ public abstract class BaseCURDController<
         RwModel extends BaseEntity<PK>,
         QueryModel extends RwModel,
         PK extends Serializable,
-        RwQuery extends CommonQueryImpl,
-        OnlyQuery extends CommonQueryImpl
+        RwQuery extends Query,
+        OnlyQuery extends Query
         >
         extends BaseBusinessController<RwModel,QueryModel,PK,RwQuery,OnlyQuery>
         implements ICURDController<RwModel , QueryModel , PK>

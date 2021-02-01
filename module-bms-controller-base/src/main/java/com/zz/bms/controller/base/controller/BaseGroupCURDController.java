@@ -49,7 +49,7 @@ public abstract class   BaseGroupCURDController<
         RwModel extends BaseEntity<PK>,
         QueryModel extends RwModel,
         PK extends Serializable,
-        RwQuery extends CommonQueryImpl,
+        RwQuery extends Query,
         OnlyQuery extends RwQuery
         >
         extends BaseBusinessController<RwModel,QueryModel,PK,RwQuery,OnlyQuery>

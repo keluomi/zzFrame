@@ -56,8 +56,8 @@ public abstract class BaseExcelController<
         RwModel extends BaseEntity<PK>,
         QueryModel extends RwModel,
         PK extends Serializable,
-        RwQuery extends CommonQueryImpl,
-        OnlyQuery extends CommonQueryImpl
+        RwQuery extends Query,
+        OnlyQuery extends Query
         >
         extends BaseCURDController<RwModel,QueryModel,PK,RwQuery,OnlyQuery>
         implements IExcelConttroller<RwModel,QueryModel,PK>{
