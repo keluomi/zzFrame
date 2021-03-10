@@ -69,4 +69,10 @@
     </select>
 
 
+	<select id="selectSubRoleByRole" parameterType="java.lang.String" resultMap="TsRoleResultMap">
+			SELECT id  FROM ts_role T where T.tenant_id
+			 in (SELECT tenantId FROM ts_user_role L JOIN  ts_user R ON L.userId = R.id WHERE L.role_id=#{roleId})
+	</select>
+
+
 </mapper>

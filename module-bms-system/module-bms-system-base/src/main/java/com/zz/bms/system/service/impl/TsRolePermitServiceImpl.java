@@ -1,13 +1,18 @@
 package com.zz.bms.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zz.bms.core.db.base.dao.BaseDAO;
 import com.zz.bms.core.db.entity.EntityUtil;
 import com.zz.bms.system.bo.TsPermitBO;
 import com.zz.bms.system.bo.TsRoleBO;
 import com.zz.bms.system.bo.TsRolePermitBO;
+import com.zz.bms.system.bo.TsUserRoleBO;
 import com.zz.bms.system.dao.TsPermitDAO;
 import com.zz.bms.system.dao.TsRoleDAO;
 import com.zz.bms.system.dao.TsRolePermitDAO;
+import com.zz.bms.system.dao.TsUserRoleDAO;
 import com.zz.bms.system.service.TsDictService;
 import com.zz.bms.system.service.TsRolePermitService;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +48,8 @@ public class TsRolePermitServiceImpl extends SystemBaseServiceImpl<TsRolePermitB
 	private TsRolePermitDAO tsRolePermitDAO ;
 
 
+	@Autowired
+	private TsUserRoleDAO tsUserRoleDAO;
 
 	@Override
 	public BaseDAO getDAO() {
@@ -144,4 +151,21 @@ public class TsRolePermitServiceImpl extends SystemBaseServiceImpl<TsRolePermitB
 	}
 
 
+	@Override
+	public void updateAfter(TsRolePermitBO tsRolePermitBO) {
+		super.updateAfter(tsRolePermitBO);
+
+		//以下代码块是处理企业用户
+		String roleId = tsRolePermitBO.getRoleId();
+		String permitId = tsRolePermitBO.getPermitId();
+		List<TsRoleBO> roleList = tsRoleDAO.selectSubRoleByRole(roleId);
+		roleList.forEach(item->{
+			TsRolePermitBO tsRolePermit = new TsRolePermitBO();
+			tsRolePermit.setRoleId(roleId);
+			tsRolePermit.setPermitId(permitId);
+			Wrapper<TsRolePermitBO> tsRolePermitBOWrapper = new UpdateWrapper<>(tsRolePermit);
+					getDAO().delete(tsRolePermitBOWrapper);
+		});
+
+	}
 }
