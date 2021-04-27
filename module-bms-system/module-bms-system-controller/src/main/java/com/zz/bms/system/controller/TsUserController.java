@@ -60,6 +60,7 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 		if (!systemUser){
 			query.setTenantId(tenantId);
 		}
+		query.setId_NOTIN(sessionUserVO.getId());
 	}
 
 

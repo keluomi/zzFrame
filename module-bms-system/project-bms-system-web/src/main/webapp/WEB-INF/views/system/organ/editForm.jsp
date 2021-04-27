@@ -25,7 +25,7 @@
                     </colgroup>
 
                     <tbody>
-                            <c:if test="${systemAdminUser}">
+                            <c:if test="${systemAdmin}">
                                 <tr>
                                     <th>租户</th>
                                     <td class="fd_tenantName" colspan="3">${m.tenantName}</td>

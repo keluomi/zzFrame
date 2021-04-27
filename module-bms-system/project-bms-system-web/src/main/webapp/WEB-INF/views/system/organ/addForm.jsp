@@ -25,7 +25,7 @@
 
                         <tbody>
 
-                        <c:if test="${systemAdminUser}">
+                        <c:if test="${systemAdmin}">
                             <tr>
                                 <th>租户<font color="red">*</font></th>
                                 <td colspan="3">

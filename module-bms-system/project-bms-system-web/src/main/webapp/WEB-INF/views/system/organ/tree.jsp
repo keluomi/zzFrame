@@ -79,7 +79,7 @@
            border='true' sortName="id" sortOrder="desc" style="width: 100%;">
         <thead>
         <tr>
-            <th field='organName' align="left" width="5" sortable='false' formatter='titleAllFmt' >机构名称</th>
+            <th field='organName' align="left" width="5" sortable='false' formatter='titleFmt' >机构名称</th>
             <th field='organCode' align="left" width="2" sortable='false'  >机构代码</th>
             <th field='organAddr' align="left" width="3" sortable='false'  >机构地址</th>
             <th field='leadUserName' align="left" width="1" sortable='false'  >负责人</th>
