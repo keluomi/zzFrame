@@ -81,6 +81,10 @@ public class TsUserController extends ZzDefaultController<TsUserBO,VsUserBO, Str
 		tsUserBO.setUserStatusName(EnumUserStatus.normal.getLabel());
 		tsUserBO.setPageLimit(100);
 		tsUserBO.setSystemAdmin(EnumYesNo.NO.getCode());
+		boolean systemUser = sessionUser.isSystemAdminUser();
+		if (systemUser){
+			tsUserBO.setCompanyAdmin(EnumYesNo.YES.getCode());
+		}
 		tsUserBO.setSystemAdminName(EnumYesNo.NO.getCode());
 		tsUserBO.setSalt("2");
 		tsUserBO.setLoginPassword(ShiroUtils.encodeSalt(tsUserBO.getLoginPassword() , tsUserBO.getSalt()));

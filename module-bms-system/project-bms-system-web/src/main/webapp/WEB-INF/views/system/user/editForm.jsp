@@ -290,11 +290,9 @@
             callId: "organId",
             callName: "organName",
             clearId: "clearOrganId",
-            params: params
-        },function (id, name, obj){
-            params.organId = id;
-            depWin.tableTemple.search(params);
-
+            params: {
+                tenantId: '${m.tenantId}'
+            }
         });
     });
 

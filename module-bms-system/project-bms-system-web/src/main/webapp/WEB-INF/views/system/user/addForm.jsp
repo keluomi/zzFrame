@@ -188,7 +188,11 @@
 
     $(function() {
 
-
+        var params = {
+            tenantId: '${m.tenantId}',
+            organId: '${m.organId}',
+            depId: '${m.depId}'
+        };
 
         //部门选择
         $(".depName").OpenSystemDepSelectWin({
@@ -196,7 +200,8 @@
             selectType: "t1",
             callId: "depId",
             callName: "depName",
-            clearId: "clearDepId"
+            clearId: "clearDepId",
+            params: params
         });
 
 
@@ -206,7 +211,8 @@
             selectType: "d1",
             callId: "leadUserId",
             callName: "leadUserName",
-            clearId: "clearLeadUserId"
+            clearId: "clearLeadUserId",
+            params: params
         });
 
         //选择机构
@@ -215,7 +221,10 @@
             selectType: "t1",
             callId: "organId",
             callName: "organName",
-            clearId: "clearOrganId"
+            clearId: "clearOrganId",
+            params: {
+                tenantId: '${m.tenantId}'
+            }
         });
 
     });

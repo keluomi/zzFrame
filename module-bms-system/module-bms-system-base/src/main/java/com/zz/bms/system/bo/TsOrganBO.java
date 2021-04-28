@@ -31,8 +31,8 @@ import java.util.Map;
 @TableName(value="ts_organ" , resultMap = "TsOrganResultMap")
 public class TsOrganBO extends TsOrganEntity implements Serializable , IBoEntity {
 
-
-
+    @TableField(exist = false)
+    private String organId;
 
     @TableField(exist = false)
     @EntityAttrDictAnnotation(group = "organType", groupName = "机构类型" ,  dbColumnName = "dict_name" , dbColumnLength = 50 , isNameField = true , dictType = "organ_type")

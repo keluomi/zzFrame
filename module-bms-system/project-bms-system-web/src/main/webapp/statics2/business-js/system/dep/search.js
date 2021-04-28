@@ -37,6 +37,31 @@ function openSystemDepWin(config, callBack)
     options.callBack = callBack;
     options.sampleData = {id: "id", name: "depName"};
     options.htmlTemple = tableTemple;
+    options.compiledSuccess = function(){
+        // 查询按钮事件
+        dialog.tableTemple.find("button").bind("click", function(){
+            search();
+        });
+
+        dialog.tableTemple.find('input').keydown(function(e){
+            if(e.keyCode==13){
+                search();
+            }
+        });
+
+        // 状态发生改变查询
+        dialog.tableTemple.find("select").bind("change", function(){
+            search();
+        });
+
+        function search(){
+            // 获取查询参数
+            var params = options.params || {};
+
+            // 调用查询方法
+            dialog.tableTemple.search(params);
+        }
+    };
     var dialog = DialogTools.getDialog(options);
 
     return dialog;
