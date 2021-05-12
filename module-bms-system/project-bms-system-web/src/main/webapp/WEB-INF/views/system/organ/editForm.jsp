@@ -85,6 +85,32 @@
 
                     <tbody>
 
+                    <c:if test="${systemAdmin}">
+                        <tr>
+                            <th>租户<font color="red">*</font></th>
+                            <td colspan="3">
+                                <c:if test="${ fn:indexOf(allQueryString,'&tenantId=')>=0 }">
+                                    <input type="text" class="form-control input-sm" name="tenantName" id="tenantName" value="${ m.tenantName }" readonly>
+                                </c:if>
+                                <c:if test="${ fn:indexOf(allQueryString,'&tenantId=')<0 }">
+                                    <div class="input-group">
+                                        <input type="text"  id="tenantName" name="tenantName" value="${m.tenantName}" class="form-control input-sm  tenantName "
+                                               placeholder="请选择所属企业" readonly="readonly" >
+                                        <input type="hidden" id="tenantId" name="tenantId" value="${m.tenantId}">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary btn-sm tenantName">
+                                                <i class="fa fa-search-plus"></i>
+                                            </button>
+                                            <button type="button" id="clearTenantId" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </td>
+                        </tr>
+
+                    </c:if>
                             <tr>
                                 <th>机构名称<font color="red">*</font></th>
                                 <td>
@@ -220,11 +246,22 @@
 <script src="${ staticUrl }/statics2/js/project/form.js"></script>
 <script src="${ staticUrl }/statics2/business-js/system/organ/search.js"></script>
 <script src="${ staticUrl }/statics2/business-js/system/user/search.js"></script>
+<script src="${ staticUrl }/statics2/business-js/system/tenant/search.js"></script>
+
 
 
 <script language="JavaScript">
 
     $(function() {
+        //企业选择
+        $(".tenantName").OpenSystemTenantSelectWin({
+            title: "直属领导",
+            selectType: "d1",
+            callId: "tenantId",
+            callName: "tenantName",
+            clearId: "clearTenantId"
+        });
+
         //选择负责人
         $(".leadUserName").OpenSystemUserSelectWin({
             title: "负责人",

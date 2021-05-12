@@ -218,14 +218,15 @@ public abstract class BaseCURDController<
 
 
             if (id == null) {
-                //增加查询条件，用括号包住
-                wrapper.nested((qw) -> {
-                    qw.eq(ea.parentColumnName(), "");
-                    qw.or();
-                    qw.isNull(ea.parentColumnName());
-                    return qw;
-                });
-
+                if (!sessionUserVO.isSystemAdminUser()){
+                    //增加查询条件，用括号包住
+                    wrapper.nested((qw) -> {
+                        qw.eq(ea.parentColumnName(), "");
+                        qw.or();
+                        qw.isNull(ea.parentColumnName());
+                        return qw;
+                    });
+                }
             } else {
                 wrapper.eq(ea.parentColumnName(), id);
             }
