@@ -188,11 +188,19 @@
 
     $(function() {
 
+        var systemAdmin ='${systemAdmin}';
         var params = {
             tenantId: '${m.tenantId}',
             organId: '${m.organId}',
             depId: '${m.depId}'
         };
+        var orgParams = {
+            tenantId: '${m.tenantId}'
+        };
+        if (systemAdmin){
+            orgParams = {};
+        }
+
 
         //部门选择
         $(".depName").OpenSystemDepSelectWin({
@@ -222,9 +230,7 @@
             callId: "organId",
             callName: "organName",
             clearId: "clearOrganId",
-            params: {
-                tenantId: '${m.tenantId}'
-            }
+            params: orgParams
         });
 
     });

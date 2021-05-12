@@ -152,7 +152,6 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 			List<TsOrganBO> list =  tsOrganDAO.selectBatchIds(pidList);
 			List<TsTenantBO> tendList = tsTenantDAO.selectBatchIds(tendIdList);
 			Map<String,TsOrganBO> map = EntityUtil.list2Map(list);
-			Map<String,TsTenantBO> tendMap = EntityUtil.list2Map(tendList);
 
 			tsOrganBOs.forEach(tsOrganBO -> {
 				if(StringUtils.isNotEmpty( tsOrganBO.getPid())){
@@ -161,12 +160,7 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 						tsOrganBO.setPname(temp.getOrganName());
 					}
 				}
-				if (StringUtils.isNotEmpty(tsOrganBO.getTenantId())){
-					TsTenantBO  tendBo = tendMap.get(tsOrganBO.getTenantId());
-					if (tendBo != null){
-						tsOrganBO.setTenantName(tendBo.getTenantName());
-					}
-				}
+
 			});
 		}
 
@@ -190,6 +184,13 @@ public class TsOrganServiceImpl extends SystemBaseServiceImpl<TsOrganBO,String> 
 				TsDictBO dict = dictMap.get(EnumDictType.ORGAN_STATUS.getVal() + tsOrganBO.getOrganStatus());
 				if(dict != null) {
 					tsOrganBO.setOrganStatusName(dict.getDictName());
+				}
+			}
+
+			if(StringUtils.isNotEmpty( tsOrganBO.getTenantId())){
+				TsTenantBO temp = tsTenantDAO.selectById(tsOrganBO.getTenantId());
+				if(temp != null){
+					tsOrganBO.setTenantName(temp.getTenantName());
 				}
 			}
 		});
