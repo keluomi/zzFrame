@@ -7,9 +7,12 @@ import com.zz.bms.core.db.entity.BaseEntity;
 import com.zz.bms.enums.EnumYesNo;
 import com.zz.bms.system.bo.TsFileUseBO;
 import com.zz.bms.system.bo.VsFileUseBO;
+import com.zz.bms.system.listeners.event.EventOperation;
+import com.zz.bms.system.listeners.event.TombGlobalEvent;
 import com.zz.bms.system.service.TsFileUseService;
 import com.zz.bms.util.spring.ReflectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -18,6 +21,10 @@ import java.util.List;
 
 public abstract class SystemBaseServiceImpl<T extends BaseEntity<PK>,  PK extends Serializable>
         extends BaseServiceImpl<T , PK> implements BaseService<T , PK> {
+
+
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Autowired
     private TsFileUseService tsFileUseService ;
@@ -88,5 +95,12 @@ public abstract class SystemBaseServiceImpl<T extends BaseEntity<PK>,  PK extend
     public void updateAfter(T t){
         processFiles(t);
     }
+
+    public void doPublishEvent(String cemeteryId,String businessId, TombGlobalEvent.EnumOperationType enumOperationType, EventOperation eventOperation){
+        TombGlobalEvent event = new TombGlobalEvent(enumOperationType, eventOperation, cemeteryId, businessId);
+        applicationContext.publishEvent(event);
+    }
+
+
 
 }
